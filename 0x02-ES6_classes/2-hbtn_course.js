@@ -1,58 +1,49 @@
-// File: 2-hbtn_course.js
 export default class HolbertonCourse {
   constructor(name, length, students) {
-    this._name = this.validateString(name, 'Name');
-    this._length = this.validateNumber(length, 'Length');
-    this._students = this.validateArray(students, 'Students');
+    // Verify attribute types during obj creation
+    if (Object.getPrototypeOf(name) !== String.prototype) throw TypeError('name must be a string');
+    if (Object.getPrototypeOf(length) !== Number.prototype) throw TypeError('length must be a number');
+    if (Object.getPrototypeOf(students) !== Array.prototype) throw TypeError('students must be an array of strings');
+    students.forEach((student) => {
+      if (Object.getPrototypeOf(student) !== String.prototype) throw TypeError('students must be an array of strings');
+    });
+
+    // Create objs
+    this._name = name;
+    this._length = length;
+    this._students = students;
   }
 
-  // Getter and Setter for Name
+  // Setters
+  set name(newName) {
+    if (Object.getPrototypeOf(newName) !== String.prototype) throw TypeError('name must be a string');
+    this._name = newName;
+  }
+
+  set length(newLen) {
+    if (Object.getPrototypeOf(newLen) !== Number.prototype) throw TypeError('length must be a number');
+    this._length = newLen;
+  }
+
+  set students(newStudents) {
+    if (Object.getPrototypeOf(newStudents) !== Array.prototype) throw TypeError('students must be an array');
+    newStudents.forEach((student) => {
+      if (Object.getPrototypeOf(student) !== String.prototype) throw TypeError('students must be an array of strings');
+    });
+    this._students = newStudents;
+  }
+
+  // Getters
+
   get name() {
     return this._name;
   }
 
-  set name(newName) {
-    this._name = this.validateString(newName, 'Name');
-  }
-
-  // Getter and Setter for Length
   get length() {
     return this._length;
   }
 
-  set length(newLength) {
-    this._length = this.validateNumber(newLength, 'Length');
-  }
-
-  // Getter and Setter for Students
   get students() {
     return this._students;
   }
-
-  set students(newStudents) {
-    this._students = this.validateArray(newStudents, 'Students');
-  }
-
-  // Validation functions
-  validateString(value, attribute) {
-    if (typeof value !== 'string') {
-      throw new TypeError(`${attribute} must be a string`);
-    }
-    return value;
-  }
-
-  validateNumber(value, attribute) {
-    if (typeof value !== 'number') {
-      throw new TypeError(`${attribute} must be a number`);
-    }
-    return value;
-  }
-
-  validateArray(value, attribute) {
-    if (!Array.isArray(value)) {
-      throw new TypeError(`${attribute} must be an array`);
-    }
-    return value;
-  }
 }
-
